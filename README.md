@@ -1,1 +1,1 @@
-"# angular-small-projects" 
+# angular-small-projects
