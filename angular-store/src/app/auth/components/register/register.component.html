@@ -1,5 +1,5 @@
 <div id="center">
-    <form [formGroup]="registerForm" class="form-signup" id="regeister">
+    <form [formGroup]="registerForm" class="form-signup text-center d-flex flex-column g-5 " id="regeister">
         <h1 class="h3 mb-3 font-weight-normal">Create an account</h1>
         <label for="inputEmail" class="sr-only">Email address</label>
         <input type="email" id="inputEmail" class="form-control" placeholder="Email address" formControlName="email" required autofocus>
@@ -22,5 +22,7 @@
           </p>
         </ng-container>
         <button class="btn btn-lg btn-secondary btn-block mt-3" type="submit" [disabled]="registerForm.invalid">Register</button>
+        <br>
+        <a href="" [routerLink]="['/auth/login']" class="text-secondary pt-5 ">Sign in</a>
       </form>
 </div>

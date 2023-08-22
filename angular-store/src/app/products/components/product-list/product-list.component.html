@@ -1,7 +1,37 @@
 <div class="container padding">
     <div class="row">
-      <div class="col-md-4" *ngFor="let product of products">
-        <app-product-card [product]="product"></app-product-card>
+      <div class="col-lg-4 mt-3" *ngFor="let product of products">
+        
+        <div class="card d-flex flex-column justify-content-between" (click)="showDetails(product.id)">
+          <a
+                href="#"
+                class="text-decoration-none text-black  "
+                [routerLink]="['/products/details']"
+                [queryParams]="{ id: product.id }"
+              >
+          <img
+            [src]="product.image"
+            width="200px"
+            height="300px"
+            [alt]="product.title"
+          />
+
+          <div class="card-body">
+            <h5 class="card-title">{{ product.title }}</h5>
+            <p class="card-text">
+              {{ product.description }}
+            </p>
+          </div>
+          
+        </a>
+          
+          <div class="d-flex align-items-center justify-content-evenly">
+            <a class="btn btn-outline-secondary rounded-0 m-4 " (click)="onAddToCart(product)"
+              >Add to Cart</a
+            >
+            
+          </div>
+        </div>
       </div>
     </div>
   </div>

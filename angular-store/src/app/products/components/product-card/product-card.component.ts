@@ -1,7 +1,9 @@
 import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Product } from '../../../product';
+import { Product } from '../../models/product';
 import {data} from '../../../data' ;
+import { HttpClient } from '@angular/common/http';
+import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: 'app-product-card',
@@ -9,22 +11,36 @@ import {data} from '../../../data' ;
   styleUrls: ['./product-card.component.css']
 })
 export class ProductCardComponent {
-  @Input() product!: Product;
+  product!: Product;
 
-  constructor(private route: ActivatedRoute, private _router: Router) {}
+  constructor(
+    private route: ActivatedRoute, 
+    private _router: Router,
+    private _http: HttpClient,
+    private _cartService: CartService
+    ) {}
 
-  ngOnInit() {
-    this.route.queryParams.subscribe(params => {
-      const id = params['id'];
-      if (id) {
-        console.log(id); // log the id only if it exists
-        this.product = data[id-1]
-      }
+    productId! : string;
+
+  ngOnInit(): void {
+    this.productId=this.route.snapshot.queryParams['id'];
+    console.log(this.productId);
+    
+
+    this._http
+    .get(`https://fakestoreapi.com/products/${this.productId}`)
+    .subscribe({
+      next:(res: Product)=>{
+        console.log(res);
+        this.product = res;
+        
+      },
     });
+    
   }
 
-  routeToCart() {
-    // this._router.navigateByUrl('/auth');
-    this._router.navigate(['/cart']);
+  onAddToCart(){
+    this._cartService.onCountIncrement();
+    this._cartService.onItemAdded(this.product)
   }
 }

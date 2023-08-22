@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './auth/components/login/login.component';
 import { RegisterComponent } from './auth/components/register/register.component';
 import { ProductListComponent } from './products/components/product-list/product-list.component';
-import { CartComponent } from './cart/cart.component';
+import { CartComponent } from './cart/components/cart.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/products', pathMatch: 'full' },
@@ -17,7 +17,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('./products/products.module').then((m) => m.ProductsModule),
   },
-  { path: 'cart', component: CartComponent },
+  { 
+    path: 'cart',
+    loadChildren: () => import ('./cart/cart.module').then((m)=>m.CartModule),
+    // canActivate: [authGuard],
+  },
 ];
 
 @NgModule({
